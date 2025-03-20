@@ -221,7 +221,7 @@ const TripForm = () => {
                         </div>
                     )}
 
-                    <div className="flex space-x-4 mt-16">
+                    <div className="flex space-x-4 mt-20 md:mt-16">
                         <button type="button" onClick={handleResetLocations} className="flex items-center border border-[#5ead8a] text-[#5ead8a] px-4 py-2 rounded hover:bg-[#5ead8a] hover:text-white hover:cursor-pointer">
                             <RefreshCw className="mr-1" size={16} />
                             Reset Locations

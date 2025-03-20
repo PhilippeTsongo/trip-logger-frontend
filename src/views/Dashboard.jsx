@@ -85,32 +85,32 @@ const Dashboard = () => {
             <div className="md:flex md:justify-between mt-5 md:gap-5 items-center  ">
                 <div className="md:w-2/4 bg-white px-2 py-2 md:px-3 md:py-6 rounded-md relative ">
                     <div className="flex justify-between items-center text-[#5ead8a] border-b border-[#5ead8a] pb-2">
-                        <h2 className="text-3xl font-bold ">Enjoy your trip.</h2>
+                        <h2 className="text-2xl md:text-3xl font-bold ">Enjoy your trip.</h2>
                         <Truck size={35} className="bg-white border border-[#5ead8a] rounded-full p-2 mt-2 text-3xl" />
                     </div>
                 </div>
 
                 <div className="md:w-2/4 bg-white px-2 py-2 md:px-3 md:py-8 rounded-md relative">
                     <div className="flex justify-between items-center ">
-                        <div className="flex justify-between gap-2">
+                        <div className="flex justify-between gap-1">
                             <Truck size={15} className="bg-gray-100 text-[#5ead8a] rounded-full p-2 w-10 h-10" />
-                            <div>
+                            <div className="text-xs">
                                 Total trips
-                                <p className="text-xs mt-auto mr-0" >20</p>
+                                <p className="mt-auto mr-0" >20</p>
                             </div>
                         </div>
-                        <div className="flex justify-items-center gap-2">
+                        <div className="flex justify-items-center gap-1">
                             <Clock size={15} className="bg-gray-100 text-[#5ead8a] rounded-full p-2 w-10 h-10" />
-                            <div>
+                            <div className="text-xs">
                                 Total hours
-                                <p className="text-xs mt-auto mr-0" >10000</p>
+                                <p className="mt-auto mr-0" >10000</p>
                             </div>
                         </div>
-                        <div className="flex justify-items-center gap-2">
+                        <div className="flex justify-items-center gap-1">
                             <Ruler size={15} className="bg-gray-100 text-[#5ead8a] rounded-full p-2 w-10 h-10" />
-                            <div>
+                            <div className="text-xs">
                                 Total distance
-                                <p className="text-xs mt-auto mr-0" >40000km</p>
+                                <p className="mt-auto mr-0" >40000km</p>
                             </div>
                         </div>
                     </div>

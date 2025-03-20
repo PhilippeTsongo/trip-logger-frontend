@@ -75,17 +75,17 @@ const Sidebar = () => {
 
 			<div className="flex-1  bg-[#fcfbfc]">
 				<div className="absolute flex items-center gap-2 p-2">
-					{!isOpen &&(
-						<div className="md:hidden text-[#5ead8a] rounded-md py-1 px-1">
-							TRIP PLANNER
-						</div>
-					)}
 					<button
 						onClick={toggleSidebar}
 						className="md:hidden p-1 text-[#5ead8a] rounded-md top-4 left-4 z-50"
 					>
 						{isOpen ? <X /> : (<><Menu /> </>)}
 					</button>
+					{!isOpen && (
+						<Link to="/" className="md:hidden text-xl text-[#5ead8a] rounded-md py-1">
+							TRIP PLANNER
+						</Link>
+					)}
 				</div>
 
 			</div>

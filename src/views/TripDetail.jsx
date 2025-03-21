@@ -27,7 +27,6 @@ const TripDetail = () => {
         }
     }
 
-    // In your useEffect or wherever you are handling the fetched data
     useEffect(() => {
         fetchTripById(tripId)
             .then((data) => {
@@ -35,44 +34,30 @@ const TripDetail = () => {
                 const pickupLocation = JSON.parse(data.data.pickup_location.replace(/'/g, '"'));
                 const dropoffLocation = JSON.parse(data.data.dropoff_location.replace(/'/g, '"'));
     
-                // Coordinates array for current, pickup, and dropoff locations
-                const coordinates = [
+                // parsed all locations  correctly
+                if (!currentLocation || !pickupLocation || !dropoffLocation) {
+                    console.error("Error parsing locations");
+                    return;
+                }
+    
+                // Array of waypoints
+                let wayPoints = [
                     [currentLocation.lat, currentLocation.lon],
-                    [pickupLocation.lat, pickupLocation.lon],
+                    [pickupLocation.lat, pickupLocation.lon], 
                     [dropoffLocation.lat, dropoffLocation.lon]
                 ];
     
-                // Map waypoints to actual coordinates and ensure the dropoff location is included
-                const wayPoints = data.route_instructions.flatMap(instruction =>
-                    instruction.way_points.map(index => coordinates[index])
-                );
-    
-                // Explicitly ensure dropoff location is part of the waypoints
-                if (!wayPoints.includes([dropoffLocation.lat, dropoffLocation.lon])) {
-                    wayPoints.push([dropoffLocation.lat, dropoffLocation.lon]);
-                }
-    
-                // Ensure the route has valid coordinates
-                const validWayPoints = wayPoints.filter(point =>
-                    Array.isArray(point) &&
-                    point.length === 2 &&
-                    point.every(coord => !isNaN(coord))
-                );
-    
-                // Set trip and route data
+                // Set trip data
                 setTrip(data);
-                setRoute(validWayPoints);
+                setRoute(wayPoints);
     
                 setStops([
-                    { position: parseLocation(currentLocation), label: "Current Location" },
-                    { position: parseLocation(pickupLocation), label: "Pickup Location" },
-                    { position: parseLocation(dropoffLocation), label: "Dropoff Location" },
+                    { position: { lat: currentLocation.lat, lon: currentLocation.lon }, label: "Current Location" },
+                    { position: { lat: pickupLocation.lat, lon: pickupLocation.lon }, label: "Pickup Location" },
+                    { position: { lat: dropoffLocation.lat, lon: dropoffLocation.lon }, label: "Dropoff Location" },
                 ]);
     
-                // Set log sheets data
                 setLogSheets(data.log_sheet);
-    
-                // Set route instructions
                 setRouteInstructions(data.route_instructions);
             })
             .catch((error) => {
@@ -80,7 +65,6 @@ const TripDetail = () => {
             });
     }, [tripId]);
     
-    // Use hardcoded values for center and zoom
     const centerLatLon = [10, -10]; // default map center
     const zoomLevel = 2; // zoom level
 
@@ -95,7 +79,7 @@ const TripDetail = () => {
             <div className="flex justify-between items-center">
                 <h3 className="text-xl text-gray-700 font-semibold">Trip details</h3>
 
-                <div className="flex space-x-4 ">
+                <div className="flex space-x-4 mt-2">
                     <Link
                         to='/list'
                         className="flex items-center bg-[#5ead8a] text-white px-4 py-1 rounded-md shadow-md hover:cursor-pointer hover:bg-[#5ead8a]"

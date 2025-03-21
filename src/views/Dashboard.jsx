@@ -23,6 +23,7 @@ const Dashboard = () => {
     const [dropoffLocation, setDropoffLocation] = useState(null);
     const [currentCycleHours, setCurrentCycleHours] = useState("");
     const [trips, setTrips] = useState([]);
+    const [load, setLoad] = useState(false);
 
     useEffect(() => {
         //  fetch and set the user's current location when the component mounts
@@ -46,37 +47,12 @@ const Dashboard = () => {
         fetchTrips()
             .then((data) => {
                 setTrips(data);
+                setLoad(true);
             })
             .catch((error) => {
                 console.error("Error fetching trips:", error);
             });
     }, []);
-
-    const handleSubmit = (e) => {
-        e.preventDefault();
-
-        if (!currentLocation || !pickupLocation || !dropoffLocation || !currentCycleHours) {
-            toast.error("Please select all locations and enter the cycle hours.");
-            return;
-        }
-
-        const requestData = {
-            current_location: currentLocation,
-            pickup_location: pickupLocation,
-            dropoff_location: dropoffLocation,
-            current_cycle_hours: parseInt(currentCycleHours),
-        };
-
-        saveTrip(requestData)
-            .then((data) => {
-                toast.success("Trip created successfully!");
-                console.log("Trip created successfully:", data);
-            })
-            .catch((error) => {
-                toast.error("Error creating trip. Please try again.");
-                console.error("Error creating trip:", error);
-            });
-    };
 
     return (
         <div className="w-full">
@@ -116,6 +92,7 @@ const Dashboard = () => {
                     </div>
                 </div>
             </div>
+
             <div className="items-center  ">
                 <div className="mt-5 h-98 bg-white px-2 py-2 rounded-md">
                     <MapContainer center={[0, 0]} zoom={2} style={{ height: "100%", width: "100%", borderRadius: "5px" }}>
@@ -128,9 +105,16 @@ const Dashboard = () => {
                         {dropoffLocation && <Marker position={[dropoffLocation.lat, dropoffLocation.lon]} />}
                     </MapContainer>
                 </div>
-                <div className="mt-5 h-screen bg-white rounded-md">
-                    <TripTable trips={trips} />
-                </div>
+
+                {
+                    (!load) ? (<div className="text-center py-10">Loading trips...</div>)
+                        : (
+                            <div className="mt-5 h-screen bg-white rounded-md">
+                                <TripTable trips={trips} />
+                            </div>
+                        )
+                }
+
             </div>
         </div>
     );

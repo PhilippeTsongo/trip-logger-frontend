@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
-import { useNavigate, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import Header from "../components/Header";
 import { fetchTrips } from "../api/api";
-import { PlusCircle, Table } from "lucide-react";
+import { PlusCircle } from "lucide-react";
 import TripTable from "../components/TripTable";
 
 const TripList = () => {

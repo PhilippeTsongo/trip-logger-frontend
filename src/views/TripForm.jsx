@@ -149,13 +149,13 @@ const TripForm = () => {
                 <div className="flex justify-between items-center">
                     <h3 className="text-xl text-gray-700 font-bold mb-4">New Trip</h3>
 
-                    <div className="flex space-x-4 mt-2">
+                    <div className="flex items-center space-x-4">
                         <Link
                             to='/list'
                             className="flex items-center bg-[#5ead8a] text-white px-4 py-1 rounded-md shadow-md hover:cursor-pointer hover:bg-[#5ead8a]"
                         >
                             <Table className="mr-1" size={14} />
-                            Trip list
+                            Trips
                         </Link>
                     </div>
                 </div>

@@ -22,14 +22,14 @@ const TripList = () => {
         <div className="w-full">
             <Header title="Trip List" />
             <div className="flex justify-between items-center">
-                <h3 className="text-xl text-gray-700 font-semibold">Trip List</h3>
+                <h3 className="text-xl text-gray-700 font-semibold">Trips</h3>
                 <div className="flex space-x-4 mt-2">
                     <Link
                         to='/trip/new'
                         className="flex items-center bg-[#5ead8a] text-white px-4 py-1 rounded-md shadow-md hover:cursor-pointer hover:bg-[#5ead8a]"
                     >
                         <PlusCircle className="mr-1" size={14} />
-                        Trip new
+                        New trip
                     </Link>
                 </div>
             </div>

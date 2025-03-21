@@ -6,12 +6,12 @@ const MapContainerComponent = ({ center, zoom, route, stops, routeInstructions }
         <div className="w-full h-96 overflow-hidden">
             <MapContainer center={center} zoom={zoom} style={{ height: '100%', width: '100%', borderRadius: "5px" }}>
                 <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
-                <Polyline positions={route} color="blue" />
+                {route.length > 0 && <Polyline positions={route} color="blue" />}
                 {stops.map((stop, index) => (
                     stop.position &&
                     !isNaN(stop.position.lat) &&
                     !isNaN(stop.position.lon) && (
-                        <Marker key={index} position={stop.position}>
+                        <Marker key={index} position={[stop.position.lat, stop.position.lon]}>
                             <Popup>
                                 <div>{stop.label}</div>
                                 {routeInstructions[index] && (

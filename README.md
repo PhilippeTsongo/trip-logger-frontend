@@ -59,3 +59,7 @@ src/
 ├── api/             # API calls
 ├── App.jsx          # Main App component
 └── main.jsx         # Entry point for the app
+
+
+### 6. Hosted version (vercel.app)
+https://trip-logger-jet.vercel.app

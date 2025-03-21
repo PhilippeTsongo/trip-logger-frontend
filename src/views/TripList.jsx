@@ -7,16 +7,21 @@ import TripTable from "../components/TripTable";
 
 const TripList = () => {
     const [trips, setTrips] = useState([]);
-
+    const [load, setLoad] = useState(false);
     useEffect(() => {
         fetchTrips()
             .then((data) => {
                 setTrips(data);
+                setLoad(true);
             })
             .catch((error) => {
                 console.error("Error fetching trips:", error);
             });
     }, []);
+
+    if (!load) {
+        return <div className="text-center py-10">Loading trips...</div>;
+    }
 
     return (
         <div className="w-full">

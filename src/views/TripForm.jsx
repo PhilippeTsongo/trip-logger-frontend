@@ -61,6 +61,7 @@ const TripForm = () => {
     const mapRef = useRef(null);
     const routeControlRef = useRef(null);
     const [resetTrigger, setResetTrigger] = useState(false);
+    const [load, setLoad] = useState(false);
 
     useEffect(() => {
         function requestUserLocation() {
@@ -161,6 +162,7 @@ const TripForm = () => {
             current_cycle_hours: parseInt(currentCycleHours),
         };
 
+        setLoad(true);
         saveTrip(requestData)
             .then((data) => {
                 toast.success("Trip created successfully!");
@@ -197,6 +199,8 @@ const TripForm = () => {
                         <label className="block text-sm text-gray-500">Current Cycle Hours</label>
                         <input
                             type="number"
+                            min={0}
+                            max={11}
                             value={currentCycleHours}
                             onChange={(e) => setCurrentCycleHours(e.target.value)}
                             className="border border-gray-200 p-2 rounded w-full"
@@ -259,9 +263,15 @@ const TripForm = () => {
                             Reset Locations
                         </button>
 
-                        <button type="submit" className="bg-[#5ead8a] text-white px-4 py-2 rounded hover:cursor-pointer hover:bg-[#5ead8a]">
-                            Submit
-                        </button>
+                        {
+                            load ? (<div className="text-center py-10">Saving trip...</div>) : 
+                            (
+                                <button type="submit" className="bg-[#5ead8a] text-white px-4 py-2 rounded hover:cursor-pointer hover:bg-[#5ead8a]">
+                                Submit
+                                </button>
+                            )
+                            
+                        }
                     </div>
                 </form>
             </div >

@@ -17,15 +17,6 @@ const TripDetail = () => {
     const [trip, setTrip] = useState(null);
     const [routeInstructions, setRouteInstructions] = useState([]);
 
-    function parseLocation(location) {
-        try {
-            return { lat: location.lat, lon: location.lon };
-        } catch (error) {
-            console.error("Error parsing location:", error);
-            return null;
-        }
-    }
-
     useEffect(() => {
         async function fetchRoute() {
             try {

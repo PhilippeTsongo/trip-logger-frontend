@@ -264,13 +264,12 @@ const TripForm = () => {
                         </button>
 
                         {
-                            load ? (<div className="text-center py-10">Saving trip...</div>) : 
+                            load ? (<div className="text-center">Saving trip...</div>) : 
                             (
                                 <button type="submit" className="bg-[#5ead8a] text-white px-4 py-2 rounded hover:cursor-pointer hover:bg-[#5ead8a]">
                                 Submit
                                 </button>
                             )
-                            
                         }
                     </div>
                 </form>

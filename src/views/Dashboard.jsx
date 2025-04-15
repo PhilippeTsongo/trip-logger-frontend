@@ -27,7 +27,19 @@ const Dashboard = () => {
 
     useEffect(() => {
         //  fetch and set the user's current location when the component mounts
-        if (navigator.geolocation) {
+
+        const DEFAULT_LOCATION = {
+            lat: -1.9577, // e.g., Kigali
+            lon: 30.1127,
+        };
+
+        function requestUserLocation() {
+            if (!navigator.geolocation) {
+                toast.error("Geolocation is not supported by your browser.");
+                setCurrentLocation(DEFAULT_LOCATION);
+                return;
+            }
+
             navigator.geolocation.getCurrentPosition(
                 (position) => {
                     setCurrentLocation({
@@ -37,13 +49,42 @@ const Dashboard = () => {
                 },
                 (error) => {
                     console.error("Error fetching location:", error);
-                    toast.error("Unable to get current location");
+
+                    // Optional: use Permissions API to give more context
+                    if (navigator.permissions) {
+                        navigator.permissions.query({ name: "geolocation" }).then((result) => {
+                            if (result.state === "denied") {
+                                toast.error(
+                                    "You've blocked location access. Please allow it in your browser settings."
+                                );
+                                setCurrentLocation(DEFAULT_LOCATION);
+                            } else {
+                                const retry = window.confirm(
+                                    "We couldn't get your location. Would you like to try again?"
+                                );
+                                if (retry) {
+                                    requestUserLocation(); // Retry
+                                } else {
+                                    setCurrentLocation(DEFAULT_LOCATION);
+                                }
+                            }
+                        });
+                    } else {
+                        const retry = window.confirm(
+                            "We couldn't get your location. Would you like to try again?"
+                        );
+                        if (retry) {
+                            requestUserLocation();
+                        } else {
+                            setCurrentLocation(DEFAULT_LOCATION);
+                        }
+                    }
                 }
             );
-        } else {
-            toast.error("Geolocation is not supported by this browser.");
         }
 
+        requestUserLocation(); //call the function to get the user's location
+        
         fetchTrips()
             .then((data) => {
                 setTrips(data);

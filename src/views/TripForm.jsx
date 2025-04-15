@@ -63,22 +63,54 @@ const TripForm = () => {
     const [resetTrigger, setResetTrigger] = useState(false);
 
     useEffect(() => {
-        if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition(
-                (position) => {
-                    setCurrentLocation({
-                        lat: position.coords.latitude,
-                        lon: position.coords.longitude,
-                    });
-                },
-                (error) => {
-                    console.error("Error fetching location:", error);
-                    toast.error("Unable to get current location");
-                }
-            );
-        } else {
-            toast.error("Geolocation is not supported by this browser.");
+        function requestUserLocation() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(
+                    (position) => {
+                        setCurrentLocation({
+                            lat: position.coords.latitude,
+                            lon: position.coords.longitude,
+                        });
+                    },
+                    (error) => {
+                        console.error("Error fetching location:", error);
+
+                        // Optional: use Permissions API to give more context
+                        if (navigator.permissions) {
+                            navigator.permissions.query({ name: "geolocation" }).then((result) => {
+                                if (result.state === "denied") {
+                                    toast.error(
+                                        "You've blocked location access. Please allow it in your browser settings."
+                                    );
+                                    setCurrentLocation(DEFAULT_LOCATION);
+                                } else {
+                                    const retry = window.confirm(
+                                        "We couldn't get your location. Would you like to try again?"
+                                    );
+                                    if (retry) {
+                                        requestUserLocation(); // Retry
+                                    } else {
+                                        setCurrentLocation(DEFAULT_LOCATION);
+                                    }
+                                }
+                            });
+                        } else {
+                            const retry = window.confirm(
+                                "We couldn't get your location. Would you like to try again?"
+                            );
+                            if (retry) {
+                                requestUserLocation();
+                            } else {
+                                setCurrentLocation(DEFAULT_LOCATION);
+                            }
+                        }
+                    }
+                );
+            } else {
+                toast.error("Geolocation is not supported by this browser.");
+            }
         }
+        requestUserLocation();
     }, []);
 
     // Function to reset locations and remove the route
@@ -204,17 +236,17 @@ const TripForm = () => {
 
                                 <div className="md:flex md:justify-between items-center mt-2 gap-5">
                                     <div className="flex items-center">
-                                        <MapPin size={15}/><strong className="mr-5"> Current: </strong> {currentLocation.lat.toFixed(6)}, {currentLocation.lon.toFixed(6)}
+                                        <MapPin size={15} /><strong className="mr-5"> Current: </strong> {currentLocation.lat.toFixed(6)}, {currentLocation.lon.toFixed(6)}
                                     </div>
                                 </div>
                                 <div className="md:flex md:justify-between items-center mt-2 gap-5">
                                     <div className="flex items-center">
-                                        <MapPin size={15}/><strong className="mr-5"> Pickup: </strong> {pickupLocation.lat.toFixed(6)}, {pickupLocation.lon.toFixed(6)}
+                                        <MapPin size={15} /><strong className="mr-5"> Pickup: </strong> {pickupLocation.lat.toFixed(6)}, {pickupLocation.lon.toFixed(6)}
                                     </div>
                                 </div>
                                 <div className="md:flex md:justify-between items-center mt-2 gap-5">
                                     <div className="flex items-center">
-                                        <MapPin size={15}/><strong className="mr-5"> Dropoff: </strong> {dropoffLocation.lat.toFixed(6)}, {dropoffLocation.lon.toFixed(6)}
+                                        <MapPin size={15} /><strong className="mr-5"> Dropoff: </strong> {dropoffLocation.lat.toFixed(6)}, {dropoffLocation.lon.toFixed(6)}
                                     </div>
                                 </div>
                             </div>

@@ -51,25 +51,6 @@ const Sidebar = () => {
 							<div className="ml-2">Trip Planner</div>
 						</Link>
 					</li>
-
-					<li>
-						<Link
-							to="/account"
-							className="flex items-center py-2 px-4 hover:bg-gray-100 rounded"
-						>
-							<Users size={18} />
-							<div className="ml-2">Account</div>
-						</Link>
-					</li>
-					<li className="mt-auto fixed bottom-0">
-						<Link
-							to="/logout"
-							className="flex items-center py-2 px-4 hover:bg-red-100 text-red-500 rounded"
-						>
-							<LogOut size={18} />
-							<div className="ml-2">Logout</div>
-						</Link>
-					</li>
 				</ul>
 			</div>
 

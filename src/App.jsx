@@ -20,8 +20,6 @@ const App = () => {
 						<Route path="/list" element={<TripList />} />
 						<Route path="/trip/:tripId" element={<TripDetail />} />
 						<Route path="/trip/new" element={<TripForm />} />
-						<Route path="/account" element={<h2>Account & Profile Page</h2>} />
-						<Route path="/logout" element={<h2>Logging Out...</h2>} />
 					</Routes>
 				</div>
 			</div>
